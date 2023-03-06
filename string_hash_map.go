@@ -2,6 +2,7 @@ package hashtable
 
 import (
 	"errors"
+	"github.com/wang1309/hashtable/mpool"
 	"unsafe"
 )
 
@@ -35,7 +36,7 @@ func init() {
 	strCellSize = int64(unsafe.Sizeof(StringHashMapCell{}))
 }
 
-func (ht *StringHashMap) Free(m *MPool) {
+func (ht *StringHashMap) Free(m *mpool.MPool) {
 	for i := range ht.rawData {
 		if len(ht.rawData[i]) > 0 {
 			m.Free(ht.rawData[i])
@@ -45,7 +46,7 @@ func (ht *StringHashMap) Free(m *MPool) {
 	ht.rawData, ht.cells = nil, nil
 }
 
-func (ht *StringHashMap) Init(m *MPool) (err error) {
+func (ht *StringHashMap) Init(m *mpool.MPool) (err error) {
 	ht.blockCellCntBits = kInitialCellCntBits
 	ht.blockCellCnt = kInitialCellCnt
 	ht.blockMaxElemCnt = kInitialCellCnt * kLoadFactorNumerator / kLoadFactorDenominator
@@ -60,7 +61,7 @@ func (ht *StringHashMap) Init(m *MPool) (err error) {
 	return
 }
 
-func (ht *StringHashMap) InsertStringBatch(states [][3]uint64, keys [][]byte, values []uint64, m *MPool) error {
+func (ht *StringHashMap) InsertStringBatch(states [][3]uint64, keys [][]byte, values []uint64, m *mpool.MPool) error {
 	if err := ht.resizeOnDemand(uint64(len(keys)), m); err != nil {
 		return err
 	}
@@ -79,7 +80,7 @@ func (ht *StringHashMap) InsertStringBatch(states [][3]uint64, keys [][]byte, va
 	return nil
 }
 
-func (ht *StringHashMap) InsertStringBatchWithRing(zValues []int64, states [][3]uint64, keys [][]byte, values []uint64, m *MPool) error {
+func (ht *StringHashMap) InsertStringBatchWithRing(zValues []int64, states [][3]uint64, keys [][]byte, values []uint64, m *mpool.MPool) error {
 	if err := ht.resizeOnDemand(uint64(len(keys)), m); err != nil {
 		return err
 	}
@@ -175,7 +176,7 @@ func (ht *StringHashMap) findEmptyCell(state *[3]uint64) *StringHashMapCell {
 	return nil
 }
 
-func (ht *StringHashMap) resizeOnDemand(n uint64, m *MPool) error {
+func (ht *StringHashMap) resizeOnDemand(n uint64, m *mpool.MPool) error {
 	targetCnt := ht.elemCnt + n
 	if targetCnt <= uint64(len(ht.rawData))*ht.blockMaxElemCnt {
 		return nil
@@ -197,7 +198,7 @@ func (ht *StringHashMap) resizeOnDemand(n uint64, m *MPool) error {
 		oldData0 := ht.rawData[0]
 
 		newAlloc := int(newCellCnt) * int(strCellSize)
-		if newAlloc <= GB {
+		if newAlloc <= mpool.GB {
 			// update hashTable cnt.
 			ht.blockCellCntBits = newCellCntBits
 			ht.cellCnt = newCellCnt

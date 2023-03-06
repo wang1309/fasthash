@@ -1,4 +1,4 @@
-package hashtable
+package stack
 
 import (
 	"fmt"

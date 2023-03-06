@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package hashtable
+package mpool
 
 import (
 	"errors"
 	"fmt"
+	"github.com/wang1309/hashtable/stack"
 	"log"
 	"strings"
 	"sync"
@@ -256,7 +257,7 @@ func newMpoolDetails() *mpoolDetails {
 }
 
 func (d *mpoolDetails) recordAlloc(nb int64) {
-	f := Caller(2)
+	f := stack.Caller(2)
 	k := fmt.Sprintf("%v", f)
 	d.mu.Lock()
 	defer d.mu.Unlock()
@@ -268,7 +269,7 @@ func (d *mpoolDetails) recordAlloc(nb int64) {
 }
 
 func (d *mpoolDetails) recordFree(nb int64) {
-	f := Caller(2)
+	f := stack.Caller(2)
 	k := fmt.Sprintf("%v", f)
 	d.mu.Lock()
 	defer d.mu.Unlock()

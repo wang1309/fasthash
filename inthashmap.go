@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package hashmap
+package fasthash
 
 import (
-	"github.com/wang1309/hashtable/mpool"
+	"github.com/wang1309/fasthash/mpool"
 	"unsafe"
 
 	"github.com/matrixorigin/matrixone/pkg/container/hashtable"

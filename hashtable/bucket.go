@@ -1,7 +1,7 @@
 package hashtable
 
 import (
-	"github.com/wang1309/hashtable/mpool"
+	"github.com/wang1309/fasthash/mpool"
 	"unsafe"
 )
 

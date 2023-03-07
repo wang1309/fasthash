@@ -2,8 +2,9 @@ package hashtable
 
 import (
 	"errors"
-	"github.com/wang1309/hashtable/mpool"
 	"unsafe"
+
+	"github.com/wang1309/fasthash/mpool"
 )
 
 type StringRef struct {

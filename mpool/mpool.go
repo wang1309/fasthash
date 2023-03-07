@@ -17,12 +17,13 @@ package mpool
 import (
 	"errors"
 	"fmt"
-	"github.com/wang1309/hashtable/stack"
 	"log"
 	"strings"
 	"sync"
 	"sync/atomic"
 	"unsafe"
+
+	"github.com/wang1309/fasthash/stack"
 )
 
 // Mo's extremely simple memory pool.

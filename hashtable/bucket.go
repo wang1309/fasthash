@@ -1,8 +1,9 @@
 package hashtable
 
 import (
-	"github.com/wang1309/fasthash/mpool"
 	"unsafe"
+
+	"github.com/matrixorigin/matrixone/pkg/common/mpool"
 )
 
 func (ht *StringHashMap) InsertStringBatchInBucket(states [][3]uint64, keys [][]byte, values []uint64, ibucket, nbucket uint64, m *mpool.MPool) error {

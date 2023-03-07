@@ -18,7 +18,7 @@ import (
 	"errors"
 	"unsafe"
 
-	"github.com/wang1309/fasthash/mpool"
+	"github.com/matrixorigin/matrixone/pkg/common/mpool"
 )
 
 type Int64HashMapCell struct {

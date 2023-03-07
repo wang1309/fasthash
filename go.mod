@@ -1,4 +1,4 @@
-module github.com/wang1309/hashtable
+module github.com/wang1309/fasthash
 
 go 1.19
 

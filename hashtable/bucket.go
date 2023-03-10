@@ -307,3 +307,7 @@ func (ht *Int64HashMap) FindBatchWithRingInBucket(n int, zValues []int64, hashes
 		values[i] = cell.Mapped
 	}
 }
+
+func (ht *Int64HashMap) a() int {
+
+}
